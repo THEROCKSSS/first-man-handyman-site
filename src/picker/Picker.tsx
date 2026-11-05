@@ -41,7 +41,10 @@ const ADDED: [string, string][] = [
   ["Printable cards and a flyer", "Four designs, each with a QR code to firstmanhandyman.com, printed from this page."],
   ["Terms of service and privacy policy", "Short plain-language drafts based on what the site actually does. They need a quick review before launch."],
   ["Easier to read and use", "Readable type and colors, buttons sized for thumbs, keyboard friendly, and calmer motion for people who turn animations off. Checked with accessibility tools."],
-  ["Lighter photos", "The 13 job photos were compressed by about a third, so pages load faster on a phone."],
+  ["Faster pages", "Photos load in modern formats at the right size for each screen, and a built-in speed test checks a slow phone on slow 4G."],
+  ["A page for each town", "Roseville, Rocklin, Granite Bay, Loomis, Lincoln and Sheridan each get their own page, so people searching for a handyman there can find him."],
+  ["Set up to be found on Google", "Page titles, a sitemap, business details Google can read, and a share preview with a real job photo. No street address is published."],
+  ["Safer by default", "A strict security policy on every page, no tracking, and no third-party scripts."],
 ]
 
 const CAN: [string, string][] = [
@@ -59,6 +62,7 @@ const SKILLS: [string, string][] = [
   ["update-business-info", "Change phone, email, hours, towns or services safely."],
   ["choose-the-look", "Make one of the four designs the home page."],
   ["check-site", "Run the same tests used to build it: phones, keyboard, readability."],
+  ["launch-seo", "Build the Google-ready version, run the SEO and speed checks, and list what only Adam can do (Google Business Profile, reviews)."],
   ["publish-site", "Build and upload the finished site."],
   ["change-workflow", "The rule for every change: ask questions first, show a plan, wait for a yes, then build and test."],
 ]

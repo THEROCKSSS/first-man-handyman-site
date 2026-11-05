@@ -15,6 +15,8 @@ Follow `skills/change-workflow/SKILL.md`. In short: inspect, ask the owner quest
 | The four designs | `src/looks/a`, `b`, `c`, `d` (each: `App.tsx`, `look.css` colors and fonts, `fonts.ts`) |
 | Terms and privacy page | `src/looks/legal/LegalPage.tsx` (entry files: `src/looks/<x>/legal.tsx`, `<x>/legal/index.html`) |
 | Printable cards, flyer, QR codes | `src/print/` |
+| Town pages (`/areas/...`) and which look they use | `src/areas/` (`active-look.ts` picks the launch look) |
+| Titles, descriptions, structured data, sitemap, security meta tag | `scripts/seo.mjs`; rules in `docs/SEO.md` |
 | Main page listing the designs | `src/picker/Picker.tsx` and `index.html` |
 | Photos | `src/assets/jobs/<id>.jpg` (originals, one per job). The build makes AVIF/WebP/JPEG sizes into `dist/photos/`. Preview images in `src/assets/thumbs/` |
 | Build, check, add-photo | `scripts/` |
@@ -33,6 +35,10 @@ Follow `skills/change-workflow/SKILL.md`. In short: inspect, ask the owner quest
 9. **Add photos with `node scripts/add-photo.mjs`** so they are compressed and listed correctly.
 10. Sentence-case headings, calm copy, no emoji, no hype words. Adam writes in first person ("I").
 
+## Search
+
+12. **Local SEO facts are real or absent.** No invented town details, ratings, review counts, prices or street address (service-area business, no storefront). Town text from Adam goes in `AREA_NOTES` in `data.ts`. `npm run seo-check` must pass before a launch build. Details: `docs/SEO.md`, recipe `skills/launch-seo`.
+
 ## Speed
 
 11. **`npm run perf` must pass** after any change that adds images, scripts or fonts. Budgets are in `perf-budget.json`; do not raise them without the owner. Details: `docs/PERFORMANCE.md`.
@@ -40,7 +46,7 @@ Follow `skills/change-workflow/SKILL.md`. In short: inspect, ask the owner quest
 ## Commands
 
 ```bash
-npm run typecheck && npm run build && npm run check && npm run perf
+npm run typecheck && npm run build && npm run check && npm run perf && npm run seo-check
 ```
 
 ## Known leftovers

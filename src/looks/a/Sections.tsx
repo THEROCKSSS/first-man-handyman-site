@@ -1,7 +1,7 @@
 import * as Accordion from "@radix-ui/react-accordion"
 import { Tel } from "@/shared/Tel"
 import { ArrowUpRight, Plus } from "lucide-react"
-import { FAQ, GOOGLE_REVIEW, PHONE, PHONE_SMS, PHONE_TEL, REVIEWS, TOWNS } from "@/shared/data"
+import { FAQ, GOOGLE_REVIEW, PHONE, PHONE_SMS, PHONE_TEL, REVIEWS, TOWNS, areaPath } from "@/shared/data"
 import { Reveal, SectionHead } from "./bits"
 
 export function Materials() {
@@ -92,7 +92,7 @@ export function Area() {
           </SectionHead>
           <ul className="mt-8 grid grid-cols-2 gap-x-6 border-t border-foreground/80 sm:grid-cols-3">
             {TOWNS.map((t) => (
-              <li key={t} className="border-b border-border py-3.5 font-display text-xl font-semibold sm:text-2xl">{t}</li>
+              <li key={t} className="border-b border-border py-3.5 font-display text-xl font-semibold sm:text-2xl"><a href={areaPath(t)} className="link-line">{t}</a></li>
             ))}
           </ul>
         </div>

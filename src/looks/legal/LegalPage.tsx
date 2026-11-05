@@ -28,7 +28,8 @@ const PRIVACY: [string, string[]][] = [
 ]
 
 export function LegalPage({ look }: { look: Look }) {
-  const home = `/${look}/`
+  // In the concept build this page lives under /<look>/; in the launch build the look is the home page at "/"
+  const home = typeof window !== "undefined" && !window.location.pathname.startsWith(`/${look}/`) ? "/" : `/${look}/`
   return (
     <div>
       <a href="#content" className="skip-link">Skip to content</a>

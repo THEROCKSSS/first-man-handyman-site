@@ -7,7 +7,7 @@ import { ArrowUpRight, Pause, Play, Check, Copy, Facebook, Instagram, Mail, Mess
 import { Toaster } from "sonner"
 import {
   EMAIL, FACEBOOK, FAQ, GOOGLE_REVIEW, INSTAGRAM, JOBS, JOB_TYPES, MESSENGER, PHONE, PHONE_SMS, PHONE_TEL,
-  REVIEWS, SERVICE_GROUPS, TOWNS,
+  REVIEWS, SERVICE_GROUPS, TOWNS, areaPath,
 } from "@/shared/data"
 import { JobLightbox, useComposer, useJobHash } from "@/shared/hooks"
 import { Reveal } from "@/shared/motion"
@@ -228,7 +228,7 @@ function Area() {
         <h2 className="text-[3.2rem] sm:text-[5.5rem]">Proudly serving south Placer County</h2>
         <p className="mt-4 text-xl text-navy-mute">Handyman service in these communities and nearby. Based in Sheridan, CA.</p>
         <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-1 font-display text-[3rem] font-extrabold uppercase leading-[1.02] sm:text-[5.2rem]">
-          {TOWNS.map((t, i) => <li key={t} className="flex items-center gap-5 transition-colors hover:text-primary">{t}{i < TOWNS.length - 1 && <span className="text-primary" aria-hidden>/</span>}</li>)}
+          {TOWNS.map((t, i) => <li key={t} className="flex items-center gap-5 transition-colors hover:text-primary"><a href={areaPath(t)} className="underline decoration-primary decoration-[3px] underline-offset-[0.1em]">{t}</a>{i < TOWNS.length - 1 && <span className="text-primary" aria-hidden>/</span>}</li>)}
         </ul>
       </div>
       <div className="hazard h-6 border-y-2 border-foreground" aria-hidden />

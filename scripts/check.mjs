@@ -18,6 +18,8 @@ if (!existsSync(join(dist, "index.html"))) { console.error(`No ${dist}/index.htm
 
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".jpg": "image/jpeg", ".png": "image/png", ".woff2": "font/woff2", ".woff": "font/woff", ".txt": "text/plain" }
 const server = createServer(async (req, res) => {
+  // axe is served from the page's own origin, so the pages' Content-Security-Policy (script-src 'self') stays switched on during the scan
+  if (req.url === "/__axe.js") return res.writeHead(200, { "content-type": "text/javascript" }).end(axeSource)
   const rel = normalize(decodeURIComponent(new URL(req.url, "http://x").pathname)).replace(/^([/\\])+/, "")
   const file = join(dist, rel === "" ? "index.html" : /[.][a-z0-9]+$/i.test(rel) ? rel : join(rel, "index.html"))
   try { res.writeHead(200, { "content-type": TYPES[extname(file).toLowerCase()] ?? "application/octet-stream" }).end(await readFile(file)) }
@@ -32,7 +34,8 @@ let browser
 try { browser = await chromium.launch(executablePath ? { executablePath } : {}) }
 catch { console.error('Could not start a browser. Install Chrome, or run "npx playwright install chromium", or set CHROME_PATH.'); server.close(); process.exit(2) }
 
-const PAGES = ["/", "/a/", "/b/", "/c/", "/d/", "/a/legal/", "/b/legal/", "/c/legal/", "/d/legal/", "/print/"]
+const PAGES = ["/", "/a/", "/b/", "/c/", "/d/", "/a/legal/", "/b/legal/", "/c/legal/", "/d/legal/", "/print/",
+  "/areas/", "/areas/roseville/", "/areas/rocklin/", "/areas/granite-bay/", "/areas/loomis/", "/areas/lincoln/", "/areas/sheridan/"]
 const failures = []
 const fail = (page, msg) => { failures.push(`${page}  ${msg}`); console.log(`  FAIL ${msg}`) }
 
@@ -57,7 +60,7 @@ for (const path of PAGES) {
     if (broken.length) problems.push(`broken images: ${broken.join(", ")}`)
 
     if (w === 1280) {
-      await page.addScriptTag({ content: axeSource })
+      await page.addScriptTag({ url: `${base}/__axe.js` })
       const v = await page.evaluate(async () => (await axe.run(document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"] } })).violations.map((x) => `${x.impact} ${x.id} x${x.nodes.length}`))
       v.forEach((x) => problems.push(`accessibility: ${x}`))
       if (path !== "/") {

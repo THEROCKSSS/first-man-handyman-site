@@ -25,6 +25,7 @@ These are **design concepts**. Nothing here changes the real website until Adam 
 npm install
 npm run build        # builds dist/ (concept mode: noindex + robots Disallow)
 npm run check        # accessibility, phone-width, keyboard and broken-image checks on every page
+npm run seo-check    # builds the launch version and checks titles, structured data, sitemap, links (see docs/SEO.md)
 npm run perf         # speed test on a slow phone and slow 4G, compared with perf-budget.json
 npm run serve        # serves dist/ at http://localhost:8290
 ```

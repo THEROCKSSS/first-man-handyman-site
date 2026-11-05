@@ -8,7 +8,8 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/check.mjs",
     "serve": "node scripts/serve.mjs dist 8290",
-    "perf": "node scripts/perf.mjs"
+    "perf": "node scripts/perf.mjs",
+    "seo-check": "node scripts/seo-check.mjs"
   },
   "dependencies": {
     "@fontsource/barlow": "^5.3.0",

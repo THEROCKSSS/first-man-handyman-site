@@ -11,3 +11,4 @@ src/components/
 src/assets/brand/
 scripts/finalize.mjs
 .cache/
+dist-launch/

@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play, Check, Copy, Facebook
 import { Toaster } from "sonner"
 import {
   EMAIL, FACEBOOK, FAQ, GOOGLE_REVIEW, INSTAGRAM, JOBS, JOB_TYPES, MESSENGER, PHONE, PHONE_SMS, PHONE_TEL,
-  REVIEWS, SERVICE_GROUPS, TOWNS, type Job,
+  REVIEWS, SERVICE_GROUPS, TOWNS, areaPath, type Job,
 } from "@/shared/data"
 import { JobLightbox, useComposer, useJobHash } from "@/shared/hooks"
 import { Counter, Reveal } from "@/shared/motion"
@@ -354,8 +354,10 @@ function Area() {
           <p className="mt-4 text-lg text-muted-foreground">Handyman service in these communities and nearby. Based in Sheridan, CA.</p>
           <ul className="mt-8 border-t border-foreground/40">
             {TOWNS.map((t) => (
-              <li key={t} className="group flex items-center justify-between border-b border-border py-3 font-display text-[2rem] leading-none transition-colors hover:text-rust sm:text-5xl">
-                {t}<ArrowRight className="size-6 -translate-x-2 text-rust opacity-0 transition-[transform,opacity] duration-200 group-hover:translate-x-0 group-hover:opacity-100" strokeWidth={1.6} aria-hidden />
+              <li key={t} className="border-b border-border">
+                <a href={areaPath(t)} className="group flex items-center justify-between py-3 font-display text-[2rem] leading-none transition-colors hover:text-rust sm:text-5xl">
+                  {t}<ArrowRight className="size-6 -translate-x-2 text-rust opacity-0 transition-[transform,opacity] duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" strokeWidth={1.6} aria-hidden />
+                </a>
               </li>
             ))}
           </ul>

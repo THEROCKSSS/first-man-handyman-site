@@ -49,6 +49,20 @@
       "cls": 0.05,
       "jsKB": 60,
       "totalKB": 150
+    },
+    "/areas/": {
+      "fcpMs": 1500,
+      "lcpMs": 1500,
+      "cls": 0.05,
+      "jsKB": 5,
+      "totalKB": 100
+    },
+    "/areas/roseville/": {
+      "fcpMs": 1500,
+      "lcpMs": 1500,
+      "cls": 0.05,
+      "jsKB": 5,
+      "totalKB": 130
     }
   }
 }

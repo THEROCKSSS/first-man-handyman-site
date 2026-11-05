@@ -12,6 +12,17 @@ export const INSTAGRAM = "https://www.instagram.com/first.man.handyman/"
 export const GOOGLE_REVIEW = "https://g.page/r/CdZ7fT9maCWCEAI/review"
 
 export const TOWNS = ["Roseville", "Rocklin", "Granite Bay", "Loomis", "Lincoln", "Sheridan"]
+export const BUSINESS = "First Man Handyman"
+export const OWNER = "Adam Ingraham"
+export const COUNTY = "Placer County"
+export const slugOf = (town: string) => town.toLowerCase().replace(/\s+/g, "-")
+/** Page for one town: /areas/roseville/ */
+export const areaPath = (town: string) => `/areas/${slugOf(town)}/`
+/**
+ * Real local detail from Adam for each town, in his own words (a job he did there, a street he knows, what people ask for).
+ * Empty on purpose: never invent it. A town page shows its note when there is one. Pages with a real note rank better.
+ */
+export const AREA_NOTES: Record<string, string> = {}
 
 export type Job = {
   id: string

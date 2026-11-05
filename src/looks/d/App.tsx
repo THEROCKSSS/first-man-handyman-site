@@ -7,7 +7,7 @@ import { ArrowUpRight, Check, Copy, Facebook, Instagram, Mail, MessageCircle, Me
 import { Toaster } from "sonner"
 import {
   EMAIL, FACEBOOK, FAQ, GOOGLE_REVIEW, INSTAGRAM, JOBS, JOB_TYPES, MESSENGER, PHONE, PHONE_SMS, PHONE_TEL,
-  REVIEWS, SERVICE_GROUPS, TOWNS,
+  REVIEWS, SERVICE_GROUPS, TOWNS, areaPath,
 } from "@/shared/data"
 import { JobLightbox, useComposer, useJobHash } from "@/shared/hooks"
 import { Reveal } from "@/shared/motion"
@@ -219,7 +219,7 @@ function Area() {
         <div className="lg:col-span-7">
           <Title label="Service area" sub="Handyman service in these communities and nearby. Based in Sheridan, CA.">Proudly serving south Placer County</Title>
           <ul className="mt-8 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3">
-            {TOWNS.map((t) => <li key={t} className="bg-background px-4 py-5 text-xl font-semibold transition-colors hover:bg-card">{t}</li>)}
+            {TOWNS.map((t) => <li key={t} className="bg-background transition-colors hover:bg-card"><a href={areaPath(t)} className="block px-4 py-5 text-xl font-semibold underline decoration-border decoration-2 underline-offset-4">{t}</a></li>)}
           </ul>
         </div>
         <Reveal className="lg:col-span-4 lg:col-start-9 lg:self-end">
