@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Shared rules only. Every look defines its own tokens (colors, fonts, radius) in looks/<x>/look.css. */
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { @apply font-display font-semibold; text-wrap: balance; letter-spacing: -0.01em; line-height: 1.08; }
+  p { text-wrap: pretty; }
+  section[id], article[id] { scroll-margin-top: 88px; }
+  /* keep keyboard focus clear of the sticky header and the phone call bar */
+  html { scroll-padding-top: 6rem; scroll-padding-bottom: 5rem; }
+  :focus-visible { outline: 2px solid oklch(var(--ring)); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: oklch(var(--primary) / 0.35); }
+  img { max-width: 100%; }
+  a, button, [role="tab"], select, summary { touch-action: manipulation; -webkit-tap-highlight-color: oklch(var(--primary) / 0.22); }
+  select option { background-color: oklch(var(--card)); color: oklch(var(--foreground)); }
+}
+
+@layer components {
+  .gutter {
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { @apply mx-auto w-full max-w-[1200px] gutter; }
+
+  .link-line {
+    position: relative;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+    transition: background-size .2s cubic-bezier(.2,.7,.2,1), color .15s;
+    padding-bottom: 2px;
+  }
+  /* invisible 44px-tall hit area; the link looks the same */
+  .link-line::after { content: ""; position: absolute; inset: -11px -4px; }
+  .skip-link {
+    position: absolute; left: 1rem; top: 0.5rem; z-index: 100; transform: translateY(-200%);
+    padding: 0.65rem 1rem; border-radius: 4px; font-weight: 600;
+    background: oklch(var(--foreground)); color: oklch(var(--background));
+  }
+  .skip-link:focus { transform: none; }
+  @media (hover: hover) { .link-line:hover { background-size: 100% 2px; } }
+}
+
+@media (max-width: 767px) {
+  body { font-size: 16px; padding-bottom: 72px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

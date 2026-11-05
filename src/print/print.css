@@ -1,0 +1,55 @@
+/* Printable cards: each design scopes its own look tokens (values are L C H), so all four render on one page. */
+[data-look="a"] {
+  --font-sans: "Figtree", system-ui, sans-serif; --font-display: "Zilla Slab", Georgia, serif;
+  --background: 97.4% 0.011 85; --foreground: 24% 0.04 258; --card: 99% 0.006 85; --muted: 94% 0.015 85; --muted-foreground: 44% 0.035 258;
+  --border: 87% 0.02 85; --primary: 68% 0.175 52; --primary-foreground: 22% 0.045 258; --rust: 50% 0.15 45;
+}
+[data-look="b"] {
+  --font-sans: "Instrument Sans", system-ui, sans-serif; --font-display: "Young Serif", Georgia, serif;
+  --background: 17% 0.012 60; --foreground: 93% 0.012 85; --card: 21.5% 0.014 60; --muted: 25% 0.014 60; --muted-foreground: 75% 0.02 75;
+  --border: 33% 0.015 60; --primary: 76% 0.16 68; --primary-foreground: 19% 0.02 60; --rust: 80% 0.14 70;
+}
+[data-look="c"] {
+  --font-sans: "Barlow", system-ui, sans-serif; --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --background: 94.5% 0.035 92; --foreground: 22% 0.06 258; --card: 98.5% 0.018 92; --muted: 90% 0.05 90; --muted-foreground: 38% 0.055 258;
+  --border: 26% 0.06 258; --primary: 69% 0.19 50; --primary-foreground: 20% 0.06 258; --rust: 46% 0.16 40;
+}
+[data-look="d"] {
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif; --font-display: "IBM Plex Sans", system-ui, sans-serif; --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --background: 26% 0.07 255; --foreground: 96% 0.01 240; --card: 30% 0.075 255; --muted: 33% 0.075 255; --muted-foreground: 82% 0.035 250;
+  --border: 55% 0.1 250; --primary: 77% 0.16 70; --primary-foreground: 22% 0.06 255; --rust: 83% 0.13 78;
+}
+/* "Save ink": every design prints light on white */
+.ink-saver [data-look] {
+  --background: 100% 0 0; --foreground: 22% 0.05 258; --card: 100% 0 0; --muted: 96% 0.01 85; --muted-foreground: 40% 0.04 258;
+  --border: 70% 0.02 258; --primary: 72% 0.17 55; --primary-foreground: 22% 0.05 258; --rust: 46% 0.15 45;
+}
+
+[data-look] { font-family: var(--font-sans); color: oklch(var(--foreground)); background: oklch(var(--background)); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+[data-look] .fd { font-family: var(--font-display); }
+[data-look="b"] .fd { font-weight: 400; }
+[data-look="c"] .fd { font-weight: 800; text-transform: uppercase; line-height: 0.92; }
+[data-look="d"] .fd { font-weight: 600; letter-spacing: -0.01em; }
+[data-look="d"] .mono { font-family: var(--font-mono); }
+.bp-grid {
+  background-image:
+    linear-gradient(oklch(var(--foreground) / 0.08) 1px, transparent 1px), linear-gradient(90deg, oklch(var(--foreground) / 0.08) 1px, transparent 1px);
+  background-size: 0.2in 0.2in;
+}
+.ink-saver .bp-grid { background-image: none; }
+.ticks {
+  height: 0.07in;
+  background-image: repeating-linear-gradient(90deg, oklch(var(--rust)) 0 1.5px, transparent 1.5px 0.16in), repeating-linear-gradient(90deg, oklch(var(--rust) / 0.7) 0 1px, transparent 1px 0.04in);
+  background-size: 100% 0.07in, 100% 0.035in; background-position: 0 100%, 0 100%; background-repeat: repeat-x;
+}
+.cut { outline: 1px dashed oklch(55% 0.02 258 / 0.55); outline-offset: -1px; }
+.qr svg { display: block; width: 100%; height: 100%; }
+
+@page { size: letter; margin: 0; }
+@media print {
+  html, body { background: #fff !important; padding: 0 !important; }
+  .no-print { display: none !important; }
+  .print-root { padding: 0 !important; }
+  .sheet-frame, .sheet-scaler { transform: none !important; width: auto !important; height: auto !important; box-shadow: none !important; margin: 0 !important; }
+  .sheet { box-shadow: none !important; margin: 0 !important; break-inside: avoid; }
+}

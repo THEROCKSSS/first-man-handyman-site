@@ -1,0 +1,27 @@
+/* Look B, Night Shift: warm dark paper, light ink, amber work-light. Values are L C H. */
+:root {
+  --font-sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Young Serif", Georgia, serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --background: 17% 0.012 60;
+  --foreground: 93% 0.012 85;
+  --card: 21.5% 0.014 60;
+  --muted: 25% 0.014 60;
+  --muted-foreground: 75% 0.02 75;
+  --border: 33% 0.015 60;
+  --primary: 76% 0.16 68;
+  --primary-foreground: 19% 0.02 60;
+  --rust: 80% 0.14 70;
+  --ring: 80% 0.14 70;
+  --navy: 13% 0.012 60;
+  --navy-2: 21.5% 0.014 60;
+  --navy-ink: 94% 0.012 85;
+  --navy-mute: 76% 0.02 75;
+  --radius: 0.5rem;
+  color-scheme: dark;
+}
+h1, h2, h3 { font-weight: 400; letter-spacing: -0.015em; }
+body { font-weight: 400; }
+/* work-light edge on photo cards */
+.photo-edge { box-shadow: 0 0 0 1px oklch(var(--border)), 0 24px 48px -28px oklch(0% 0 0 / 0.7); }
+select, textarea, input { color-scheme: dark; }

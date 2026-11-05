@@ -1,0 +1,48 @@
+/* Look C, Sign Painter: cream board, ink outlines, safety orange, hard offset shadows. Values are L C H. */
+:root {
+  --font-sans: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --background: 94.5% 0.035 92;
+  --foreground: 22% 0.06 258;
+  --card: 98.5% 0.018 92;
+  --muted: 90% 0.05 90;
+  --muted-foreground: 38% 0.055 258;
+  --border: 26% 0.06 258;
+  --primary: 69% 0.19 50;
+  --primary-foreground: 20% 0.06 258;
+  --rust: 46% 0.16 40;
+  --ring: 46% 0.16 40;
+  --navy: 24% 0.065 258;
+  --navy-2: 29% 0.065 258;
+  --navy-ink: 96% 0.02 92;
+  --navy-mute: 82% 0.03 258;
+  --radius: 0.125rem;
+  color-scheme: light;
+}
+body { font-size: 18px; }
+h1, h2, h3 { text-transform: uppercase; font-weight: 800; line-height: 0.92; letter-spacing: 0; }
+.hard { box-shadow: 6px 6px 0 0 oklch(var(--foreground)); }
+.hard-sm { box-shadow: 4px 4px 0 0 oklch(var(--foreground)); }
+.press { transition: transform 0.15s cubic-bezier(.2,.7,.2,1), box-shadow 0.15s cubic-bezier(.2,.7,.2,1), background-color 0.15s; }
+@media (hover: hover) {
+  .press:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 0 oklch(var(--foreground)); }
+}
+.press:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 oklch(var(--foreground)); }
+
+/* running ticker */
+.marquee { display: flex; width: max-content; animation: marq 46s linear infinite; }
+.marquee-wrap:hover .marquee, .marquee-wrap:focus-within .marquee, .marquee-wrap.is-paused .marquee { animation-play-state: paused; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* hazard tape */
+.hazard {
+  background-image: repeating-linear-gradient(-45deg, oklch(var(--primary)) 0 18px, oklch(var(--foreground)) 18px 36px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; width: auto; flex-wrap: wrap; }
+  .marquee-btn { display: none; }
+  .marquee-wrap { padding-right: 0; }
+  .marquee > [aria-hidden="true"] { display: none; }
+}

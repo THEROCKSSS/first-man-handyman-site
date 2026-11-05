@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+.parcel-cache/
+*.log
+
+# local-only notes and unused starter files
+HANDOFF.md
+docs/PLAN.md
+src/components/
+src/assets/brand/
+scripts/finalize.mjs

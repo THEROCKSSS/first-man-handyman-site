@@ -1,0 +1,45 @@
+/* Look D, Blueprint: drafting-table blue, white linework, one amber annotation color. Values are L C H. */
+:root {
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --background: 26% 0.07 255;
+  --foreground: 96% 0.01 240;
+  --card: 30% 0.075 255;
+  --muted: 33% 0.075 255;
+  --muted-foreground: 82% 0.035 250;
+  --border: 55% 0.1 250;
+  --primary: 77% 0.16 70;
+  --primary-foreground: 22% 0.06 255;
+  --rust: 83% 0.13 78;
+  --ring: 83% 0.13 78;
+  --navy: 20% 0.06 255;
+  --navy-2: 30% 0.075 255;
+  --navy-ink: 96% 0.01 240;
+  --navy-mute: 82% 0.035 250;
+  --radius: 0.125rem;
+  color-scheme: dark;
+}
+body {
+  /* drafting grid: fine every 24px, strong every 120px */
+  background-image:
+    linear-gradient(oklch(var(--foreground) / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(var(--foreground) / 0.07) 1px, transparent 1px),
+    linear-gradient(oklch(var(--foreground) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(var(--foreground) / 0.05) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: -1px -1px;
+}
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.04; }
+.mono { font-family: var(--font-mono); }
+select, textarea, input { color-scheme: dark; }
+
+/* crop marks on figure frames */
+.crop { position: relative; }
+.crop::before, .crop::after, .crop > .crop-b::before, .crop > .crop-b::after {
+  content: ""; position: absolute; width: 14px; height: 14px; border: 0 solid oklch(var(--rust)); pointer-events: none; z-index: 2;
+}
+.crop::before { left: -1px; top: -1px; border-left-width: 2px; border-top-width: 2px; }
+.crop::after { right: -1px; top: -1px; border-right-width: 2px; border-top-width: 2px; }
+.crop > .crop-b::before { left: -1px; bottom: -1px; border-left-width: 2px; border-bottom-width: 2px; }
+.crop > .crop-b::after { right: -1px; bottom: -1px; border-right-width: 2px; border-bottom-width: 2px; }

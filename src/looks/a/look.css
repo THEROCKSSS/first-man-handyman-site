@@ -1,0 +1,44 @@
+/* Look A, Craftsman Light: warm shop paper, navy ink, one safety-orange accent.
+   Navy and orange come from Adam's own before/after graphics. Values are L C H. */
+:root {
+  --font-sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Zilla Slab", Rockwell, Georgia, serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --background: 97.4% 0.011 85;
+  --foreground: 24% 0.04 258;
+  --card: 99% 0.006 85;
+  --muted: 94% 0.015 85;
+  --muted-foreground: 44% 0.035 258;
+  --border: 87% 0.02 85;
+  --primary: 68% 0.175 52;
+  --primary-foreground: 22% 0.045 258;
+  --rust: 50% 0.15 45;
+  --ring: 50% 0.15 45;
+  --navy: 26% 0.055 258;
+  --navy-2: 31% 0.058 258;
+  --navy-ink: 96% 0.012 85;
+  --navy-mute: 80% 0.025 258;
+  --radius: 0.5rem;
+  color-scheme: light;
+}
+.on-navy :focus-visible { outline-color: oklch(var(--primary)); }
+
+/* tape-measure ruler: short tick every 8px, long tick every 40px */
+.tape {
+  height: 10px;
+  background-image:
+    repeating-linear-gradient(90deg, oklch(var(--foreground) / 0.5) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, oklch(var(--foreground) / 0.28) 0 1px, transparent 1px 8px);
+  background-size: 100% 10px, 100% 5px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: repeat-x, repeat-x;
+}
+.tape-fill {
+  height: 10px;
+  background-image:
+    repeating-linear-gradient(90deg, oklch(var(--rust)) 0 2px, transparent 2px 40px),
+    repeating-linear-gradient(90deg, oklch(var(--rust) / 0.7) 0 1px, transparent 1px 8px);
+  background-size: 100% 10px, 100% 5px;
+  background-position: 0 100%, 0 100%;
+  background-repeat: repeat-x, repeat-x;
+}
