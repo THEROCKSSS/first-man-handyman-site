@@ -85,7 +85,8 @@ export function Contact() {
               </label>
             </div>
 
-            <div className="mt-6 rounded-md border border-dashed border-navy-mute p-4" aria-live="polite">
+            <p className="sr-only" role="status" aria-live="polite">{c.liveMessage}</p>
+            <div className="mt-6 rounded-md border border-dashed border-navy-mute p-4">
               <p className="text-[0.8rem] font-semibold text-navy-mute">Your message</p>
               <p className="mt-1 text-[1.02rem] leading-relaxed">{c.message}</p>
             </div>

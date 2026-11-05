@@ -1,4 +1,5 @@
 import { JOBS } from "@/shared/data"
+import { Photo } from "@/shared/Photo"
 import { JobLightbox, useJobHash } from "@/shared/hooks"
 import { Reveal, SectionHead } from "./bits"
 
@@ -16,12 +17,8 @@ export function Work() {
             <Reveal as="li" key={j.id} delay={(i % 3) * 0.05} className="break-inside-avoid">
               <button onClick={() => lb.open(j.id)} className="group block w-full text-left">
                 <span className="block overflow-hidden rounded-md border border-border bg-card p-1.5">
-                  <img
-                    src={j.src}
+                  <Photo job={j} sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 92vw"
                     alt=""
-                    width={j.w}
-                    height={j.h}
-                    loading="lazy"
                     className="w-full rounded-[3px] transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                     style={{ aspectRatio: `${j.w} / ${j.h}` }}
                   />

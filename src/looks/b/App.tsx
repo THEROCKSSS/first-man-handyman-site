@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Photo } from "@/shared/Photo"
 import { Tel } from "@/shared/Tel"
 import * as Accordion from "@radix-ui/react-accordion"
 import { AnimatePresence, MotionConfig, animate, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion"
@@ -71,13 +72,13 @@ function Hero() {
 
         <div className="relative grid grid-cols-2 items-start gap-3 sm:gap-4" aria-label="Recent jobs">
           <motion.a href="#work" style={{ y: yA }} className="photo-edge col-span-2 block overflow-hidden rounded-md bg-card p-1.5" aria-label="See recent work">
-            <img src={a.src} alt="Before and after of a toilet replacement" width={a.w} height={a.h} className="aspect-[4/3] w-full rounded-[3px] object-cover" fetchPriority="high" />
+            <Photo job={a} sizes="(min-width: 1024px) 560px, 92vw" eager alt="Before and after of a toilet replacement" className="aspect-[4/3] w-full rounded-[3px] object-cover" />
           </motion.a>
           <motion.a href="#work" style={{ y: yB }} className="photo-edge block overflow-hidden rounded-md bg-card p-1.5" aria-label="See recent work">
-            <img src={b.src} alt="A new pull-down kitchen faucet and stainless sink" width={b.w} height={b.h} className="aspect-[4/5] w-full rounded-[3px] object-cover" />
+            <Photo job={b} sizes="(min-width: 1024px) 270px, 45vw" alt="A new pull-down kitchen faucet and stainless sink" className="aspect-[4/5] w-full rounded-[3px] object-cover" />
           </motion.a>
           <motion.a href="#work" style={{ y: yC }} className="photo-edge mt-10 block overflow-hidden rounded-md bg-card p-1.5 sm:mt-14" aria-label="See recent work">
-            <img src={c.src} alt="Rotted patio wood replaced with new boards" width={c.w} height={c.h} className="aspect-[4/5] w-full rounded-[3px] object-cover" />
+            <Photo job={c} sizes="(min-width: 1024px) 270px, 45vw" alt="Rotted patio wood replaced with new boards" className="aspect-[4/5] w-full rounded-[3px] object-cover" />
           </motion.a>
         </div>
       </div>
@@ -109,7 +110,7 @@ function JobCard({ j, onOpen, dragged }: { j: Job; onOpen: (id: string) => void;
       className="group block shrink-0 select-none text-left"
     >
       <span className="photo-edge block overflow-hidden rounded-md bg-card p-1.5">
-        <img src={j.src} alt="" width={j.w} height={j.h} loading="lazy" draggable={false}
+        <Photo job={j} sizes="(min-width: 640px) 520px, 78vw" alt="" draggable={false}
           className="block h-[var(--card-h)] w-auto max-w-none rounded-[3px] transition-transform duration-500 ease-out group-hover:scale-[1.02]" style={{ aspectRatio: `${j.w} / ${j.h}` }} />
       </span>
       <span className="mt-3 flex items-baseline justify-between gap-4 px-0.5">
@@ -144,7 +145,7 @@ function Rail({ onOpen }: { onOpen: (id: string) => void }) {
     return () => { ro.disconnect(); window.removeEventListener("resize", measure) }
   }, [])
 
-  useMotionValueEvent(x, "change", (v) => setPos({ start: v >= -1, end: v <= -max + 1 }))
+  useMotionValueEvent(x, "change", (v) => { const s = v >= -1, e = v <= -max + 1; setPos((p) => (p.start === s && p.end === e ? p : { start: s, end: e })) })
   React.useEffect(() => setPos({ start: x.get() >= -1, end: x.get() <= -max + 1 }), [max, x])
 
   const moveTo = (target: number) => {
@@ -261,7 +262,7 @@ function Services() {
                           </ul>
                           {photo && (
                             <figure>
-                              <img src={photo.src} alt={`${photo.title}: ${photo.note}`} loading="lazy" className="photo-edge aspect-[4/3] w-full rounded-md bg-card object-cover p-1" />
+                              <Photo job={photo} sizes="(min-width: 768px) 320px, 92vw" alt={`${photo.title}: ${photo.note}`} className="photo-edge aspect-[4/3] w-full rounded-md bg-card object-cover p-1" />
                               <figcaption className="mt-2 text-[0.85rem] text-muted-foreground">Recent job: {photo.title}</figcaption>
                             </figure>
                           )}
@@ -431,7 +432,8 @@ function Contact() {
                 <textarea name="note" autoComplete="off" value={c.note} onChange={(e) => c.setNote(e.target.value)} rows={2} placeholder="The kitchen faucet drips when it’s off…" className="mt-2 block w-full resize-y rounded-md border border-muted-foreground/70 bg-card px-3 py-3 text-base font-normal placeholder:text-muted-foreground/70" />
               </label>
             </div>
-            <div className="mt-6 rounded-md border border-dashed border-border p-4" aria-live="polite"><p className="text-[0.8rem] font-semibold text-muted-foreground">Your message</p><p className="mt-1 leading-relaxed">{c.message}</p></div>
+            <p className="sr-only" role="status" aria-live="polite">{c.liveMessage}</p>
+            <div className="mt-6 rounded-md border border-dashed border-border p-4"><p className="text-[0.8rem] font-semibold text-muted-foreground">Your message</p><p className="mt-1 leading-relaxed">{c.message}</p></div>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href={c.smsHref} className="inline-flex h-12 items-center gap-2 rounded-md bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-primary/85"><MessageSquare className="size-[18px]" strokeWidth={1.9} aria-hidden /> Text Adam</a>
               <a href={c.mailHref} className="inline-flex h-12 items-center gap-2 rounded-md border border-foreground/50 px-5 font-semibold transition-colors hover:bg-foreground hover:text-background"><Mail className="size-[18px]" strokeWidth={1.9} aria-hidden /> Email instead</a>

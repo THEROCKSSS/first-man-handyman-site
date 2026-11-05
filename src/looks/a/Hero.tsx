@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { Photo } from "@/shared/Photo"
 import { Tel } from "@/shared/Tel"
 import { MessageCircle, Phone } from "lucide-react"
 import { JOBS, MESSENGER, PHONE, PHONE_TEL, TOWNS } from "@/shared/data"
@@ -52,13 +53,9 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1, ease: [0.2, 0.7, 0.2, 1] }}
         >
           <a href="#work" aria-label="See recent work" className="block overflow-hidden rounded-md border border-border bg-card p-2 shadow-[0_18px_40px_-26px_oklch(24%_0.04_258/0.5)]">
-            <img
-              src={hero.src}
+            <Photo job={hero} sizes="(min-width: 1024px) 620px, 92vw" eager
               alt="Before and after: a broken toilet with a cracked tank, and the new toilet installed"
-              width={hero.w}
-              height={hero.h}
               className="aspect-[4/3] w-full rounded-[4px] object-cover"
-              fetchPriority="high"
             />
           </a>
           <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-sm text-muted-foreground">

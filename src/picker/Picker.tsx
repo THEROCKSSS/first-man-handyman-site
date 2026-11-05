@@ -1,13 +1,13 @@
 import { motion, MotionConfig } from "framer-motion"
 import { ArrowUpRight, Download, Printer } from "lucide-react"
-import thumbA from "../assets/thumbs/a.jpg"
-import thumbB from "../assets/thumbs/b.jpg"
-import thumbC from "../assets/thumbs/c.jpg"
-import thumbD from "../assets/thumbs/d.jpg"
-import cardA from "../assets/thumbs/card-a.jpg"
-import cardB from "../assets/thumbs/card-b.jpg"
-import cardC from "../assets/thumbs/card-c.jpg"
-import cardD from "../assets/thumbs/card-d.jpg"
+import thumbA from "../assets/thumbs/a.jpg?as=webp&width=900"
+import thumbB from "../assets/thumbs/b.jpg?as=webp&width=900"
+import thumbC from "../assets/thumbs/c.jpg?as=webp&width=900"
+import thumbD from "../assets/thumbs/d.jpg?as=webp&width=900"
+import cardA from "../assets/thumbs/card-a.jpg?as=webp"
+import cardB from "../assets/thumbs/card-b.jpg?as=webp"
+import cardC from "../assets/thumbs/card-c.jpg?as=webp"
+import cardD from "../assets/thumbs/card-d.jpg?as=webp"
 
 const LOOKS = [
   {

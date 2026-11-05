@@ -20,6 +20,8 @@
   :focus-visible { outline: 2px solid oklch(var(--ring)); outline-offset: 3px; border-radius: 4px; }
   ::selection { background: oklch(var(--primary) / 0.35); }
   img { max-width: 100%; }
+  picture { display: contents; }
+  :where(picture img) { background-color: oklch(var(--muted)); }
   a, button, [role="tab"], select, summary { touch-action: manipulation; -webkit-tap-highlight-color: oklch(var(--primary) / 0.22); }
   select option { background-color: oklch(var(--card)); color: oklch(var(--foreground)); }
 }

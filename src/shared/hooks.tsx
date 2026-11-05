@@ -1,8 +1,6 @@
 import * as React from "react"
-import * as Dialog from "@radix-ui/react-dialog"
-import { motion, useReducedMotion } from "framer-motion"
-import { ArrowLeft, ArrowRight, Link2, X } from "lucide-react"
 import { toast } from "sonner"
+import { copyText } from "./clipboard"
 import { EMAIL, JOBS, PHONE, PHONE_SMS, type Job } from "./data"
 
 /** Bookmarkable job view: #job-<id>. Shared by every look. */
@@ -15,6 +13,9 @@ export function useJobHash() {
     }
     read()
     window.addEventListener("hashchange", read)
+    // fetch the photo viewer while the browser is idle, so the first tap opens it instantly
+    const idle = (window as Window & { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1500))
+    idle(() => { void loadLightbox() })
     return () => window.removeEventListener("hashchange", read)
   }, [])
   const open = React.useCallback((id: string) => { window.location.hash = `#job-${id}` }, [])
@@ -31,85 +32,26 @@ export function useJobHash() {
   return { job, idx, open, close, step }
 }
 
-async function copyText(text: string) {
-  try {
-    await navigator.clipboard.writeText(text)
-    return true
-  } catch {
-    return false
-  }
+const loadLightbox = () => import("./Lightbox")
+const LightboxImpl = React.lazy(loadLightbox)
+
+/** Shown for a moment while the viewer's code loads. */
+function LightboxSkeleton({ close }: { close: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center bg-navy/95 p-4" onClick={close} role="status">
+      <div className="aspect-[4/3] max-h-[60svh] w-[min(92vw,720px)] rounded-md bg-card/15" aria-hidden />
+      <span className="sr-only">Loading photo…</span>
+    </div>
+  )
 }
 
-/** Themed through tokens only, so it fits all four looks. Swipe, arrow keys, buttons and "copy link" all work. */
+/** The photo viewer is its own file, loaded only when needed. */
 export function JobLightbox({ job, idx, close, step }: { job: Job | null; idx: number; close: () => void; step: (d: number) => void }) {
-  const reduce = useReducedMotion()
-  React.useEffect(() => {
-    if (!job) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") step(1)
-      else if (e.key === "ArrowLeft") step(-1)
-    }
-    window.addEventListener("keydown", onKey)
-    return () => window.removeEventListener("keydown", onKey)
-  }, [job, step])
-
-  const copyLink = async () => {
-    const ok = await copyText(window.location.href)
-    if (ok) toast.success("Link to this job copied.")
-    else toast.error("Couldn’t copy. Copy the address from your browser instead.")
-  }
-
+  if (!job) return null
   return (
-    <Dialog.Root open={!!job} onOpenChange={(o) => !o && close()}>
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-50 bg-navy/95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
-        <Dialog.Content
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overscroll-contain p-4 outline-none sm:p-8"
-          onClick={(e) => { if (e.target === e.currentTarget) close() }}
-        >
-          {job && (
-            <>
-              <motion.div
-                key={job.id}
-                drag={reduce ? false : "x"}
-                dragSnapToOrigin
-                dragElastic={0.35}
-                style={{ touchAction: "pan-y" }}
-                onDragEnd={(_, i) => {
-                  if (i.offset.x < -70 || i.velocity.x < -450) step(1)
-                  else if (i.offset.x > 70 || i.velocity.x > 450) step(-1)
-                }}
-                initial={reduce ? false : { opacity: 0.4, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.25, ease: [0.2, 0.7, 0.2, 1] }}
-                className="max-w-full shrink-0 select-none overflow-hidden rounded-md bg-card p-1.5"
-              >
-                <img src={job.src} alt={`${job.title}: ${job.note}`} draggable={false} className="block h-auto max-h-[calc(100svh-260px)] w-auto max-w-full rounded-[3px] object-contain" />
-              </motion.div>
-              <div className="shrink-0 text-center text-navy-ink">
-                <Dialog.Title className="font-display text-2xl font-semibold">{job.title}</Dialog.Title>
-                <Dialog.Description className="text-navy-mute">{job.note}</Dialog.Description>
-              </div>
-              <div className="flex items-center gap-3">
-                <button onClick={() => step(-1)} className="grid size-11 place-items-center rounded-md bg-card text-foreground transition-colors hover:bg-muted" aria-label="Previous job">
-                  <ArrowLeft className="size-5" strokeWidth={1.75} />
-                </button>
-                <span className="min-w-[4.5rem] text-center text-sm tabular-nums text-navy-mute">{idx + 1} of {JOBS.length}</span>
-                <button onClick={() => step(1)} className="grid size-11 place-items-center rounded-md bg-card text-foreground transition-colors hover:bg-muted" aria-label="Next job">
-                  <ArrowRight className="size-5" strokeWidth={1.75} />
-                </button>
-                <button onClick={copyLink} className="ml-2 inline-flex h-11 items-center gap-2 rounded-md bg-card px-3.5 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-muted">
-                  <Link2 className="size-[18px]" strokeWidth={1.75} aria-hidden /> Copy link
-                </button>
-              </div>
-              <Dialog.Close className="absolute right-4 top-4 grid size-11 place-items-center rounded-md bg-card text-foreground transition-colors hover:bg-muted sm:right-6 sm:top-6" aria-label="Close">
-                <X className="size-5" strokeWidth={1.75} />
-              </Dialog.Close>
-            </>
-          )}
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+    <React.Suspense fallback={<LightboxSkeleton close={close} />}>
+      <LightboxImpl job={job} idx={idx} close={close} step={step} />
+    </React.Suspense>
   )
 }
 
@@ -119,19 +61,36 @@ function readSaved(): Saved {
   try {
     const s = JSON.parse(localStorage.getItem(STORE) ?? "null")
     if (s && typeof s.town === "string" && Array.isArray(s.picked)) return { town: s.town, picked: s.picked.filter((x: unknown) => typeof x === "string") }
-  } catch { /* storage can be blocked; the helper works without it */ }
+  } catch { /* storage can be blocked, or missing during pre-rendering; the helper works without it */ }
   return { town: "", picked: [] }
+}
+
+/** Waits for the value to stop changing. Used so screen readers hear the finished message, not every keystroke. */
+function useDebounced<T>(value: T, ms: number) {
+  const [v, setV] = React.useState(value)
+  React.useEffect(() => {
+    const t = window.setTimeout(() => setV(value), ms)
+    return () => window.clearTimeout(t)
+  }, [value, ms])
+  return v
 }
 
 /** The "write the text for me" logic. Remembers town and job types on this device only, never the free-text note. */
 export function useComposer() {
-  const saved = React.useMemo(readSaved, [])
-  const [picked, setPicked] = React.useState<string[]>(saved.picked)
-  const [town, setTown] = React.useState(saved.town)
+  const [picked, setPicked] = React.useState<string[]>([])
+  const [town, setTown] = React.useState("")
   const [note, setNote] = React.useState("")
-  const [hasSaved, setHasSaved] = React.useState(saved.town !== "" || saved.picked.length > 0)
+  const [hasSaved, setHasSaved] = React.useState(false)
+  const loaded = React.useRef(false)
 
+  // read saved choices after the first render, so server and browser render the same thing
   React.useEffect(() => {
+    const s = readSaved()
+    setPicked(s.picked); setTown(s.town); setHasSaved(s.town !== "" || s.picked.length > 0)
+    loaded.current = true
+  }, [])
+  React.useEffect(() => {
+    if (!loaded.current) return
     try {
       if (!town && picked.length === 0) localStorage.removeItem(STORE)
       else localStorage.setItem(STORE, JSON.stringify({ town, picked }))
@@ -148,6 +107,7 @@ export function useComposer() {
     parts.push("I can send a photo.")
     return parts.join(" ")
   }, [picked, town, note])
+  const liveMessage = useDebounced(message, 800)
   const toggle = (t: string) => setPicked((p) => (p.includes(t) ? p.filter((x) => x !== t) : [...p, t]))
   const reset = () => { setPicked([]); setTown(""); setNote("") }
   const smsHref = `${PHONE_SMS}?&body=${encodeURIComponent(message)}`
@@ -156,5 +116,5 @@ export function useComposer() {
     if (await copyText(message)) toast.success(`Message copied. Paste it into a text to ${PHONE}.`)
     else toast.error("Couldn’t copy. Select the message and copy it by hand.")
   }
-  return { picked, toggle, town, setTown, note, setNote, message, smsHref, mailHref, copy, hasSaved, reset }
+  return { picked, toggle, town, setTown, note, setNote, message, liveMessage, smsHref, mailHref, copy, hasSaved, reset }
 }

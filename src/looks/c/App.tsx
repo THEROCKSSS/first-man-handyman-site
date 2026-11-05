@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Photo } from "@/shared/Photo"
 import { Tel } from "@/shared/Tel"
 import * as Accordion from "@radix-ui/react-accordion"
 import { MotionConfig, motion, useReducedMotion } from "framer-motion"
@@ -94,7 +95,7 @@ function Hero() {
           initial={reduce ? false : { opacity: 0.4, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25, ease: [0.2, 0.7, 0.2, 1] }}
           className="hard block border-2 border-border bg-card p-2"
         >
-          <img src={hero.src} alt="Before and after: a broken toilet, then the new toilet installed" width={hero.w} height={hero.h} className="aspect-[4/3] w-full object-cover" fetchPriority="high" />
+          <Photo job={hero} sizes="(min-width: 1024px) 520px, 92vw" eager alt="Before and after: a broken toilet, then the new toilet installed" className="aspect-[4/3] w-full object-cover" />
           <span className="mt-2 flex items-center justify-between gap-3 px-1 pb-0.5 font-display text-xl font-bold uppercase"><span>Toilet replacement</span><span className="inline-flex items-center gap-1 text-rust">See all jobs <ArrowUpRight className="size-5" strokeWidth={2.4} aria-hidden /></span></span>
         </motion.a>
       </div>
@@ -119,7 +120,7 @@ function Work({ onOpen }: { onOpen: (id: string) => void }) {
             return (
               <Reveal as="li" key={j.id} delay={(i % 4) * 0.05} className={cn("relative aspect-square", wide && "col-span-2 row-span-2")}>
                 <button onClick={() => onOpen(j.id)} className="press hard-sm group absolute inset-0 block overflow-hidden border-2 border-border bg-card">
-                  <img src={j.src} alt="" width={j.w} height={j.h} loading="lazy" className={cn("size-full transition-transform duration-500 ease-out group-hover:scale-[1.03]", wide || j.kind === "before-after" ? "object-contain bg-card" : "object-cover")} />
+                  <Photo job={j} sizes="(min-width: 1024px) 600px, 50vw" alt="" className={cn("size-full transition-transform duration-500 ease-out group-hover:scale-[1.03]", wide || j.kind === "before-after" ? "object-contain bg-card" : "object-cover")} />
                   <span className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 border-t-2 border-border bg-primary px-2.5 py-1.5 text-left font-display text-[1.05rem] font-bold uppercase leading-tight text-primary-foreground sm:text-xl">
                     <span>{j.title}</span>{j.kind === "before-after" && <span className="hidden shrink-0 text-[0.9rem] sm:inline">Before + after</span>}
                   </span>
@@ -301,7 +302,8 @@ function Contact() {
                 <textarea name="note" autoComplete="off" value={c.note} onChange={(e) => c.setNote(e.target.value)} rows={2} placeholder="The kitchen faucet drips when it’s off…" className="mt-2 block w-full resize-y border-2 border-border bg-card px-3 py-3 font-sans text-base font-normal normal-case placeholder:text-muted-foreground/70" />
               </label>
             </div>
-            <div className="mt-6 border-2 border-dashed border-border p-4" aria-live="polite"><p className="font-display text-lg font-bold uppercase text-muted-foreground">Your message</p><p className="mt-1 text-lg leading-snug">{c.message}</p></div>
+            <p className="sr-only" role="status" aria-live="polite">{c.liveMessage}</p>
+            <div className="mt-6 border-2 border-dashed border-border p-4"><p className="font-display text-lg font-bold uppercase text-muted-foreground">Your message</p><p className="mt-1 text-lg leading-snug">{c.message}</p></div>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href={c.smsHref} className="press hard-sm inline-flex min-h-12 items-center gap-2 border-2 border-border bg-primary px-5 font-display text-xl font-extrabold uppercase text-primary-foreground"><MessageSquare className="size-5" strokeWidth={2.4} aria-hidden /> Text Adam</a>
               <a href={c.mailHref} className="press hard-sm inline-flex min-h-12 items-center gap-2 border-2 border-border bg-card px-5 font-display text-xl font-extrabold uppercase"><Mail className="size-5" strokeWidth={2.4} aria-hidden /> Email instead</a>

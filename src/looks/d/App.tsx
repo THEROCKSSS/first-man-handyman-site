@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Photo } from "@/shared/Photo"
 import { Tel } from "@/shared/Tel"
 import * as Accordion from "@radix-ui/react-accordion"
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "framer-motion"
@@ -88,7 +89,7 @@ function Hero() {
             ))}
           </div>
           <div className="crop border border-border bg-card p-2">
-            <a href="#work" aria-label="See the figures"><img src={hero.src} alt="Before and after: a broken toilet, then the new toilet installed" width={hero.w} height={hero.h} className="aspect-[4/3] w-full object-cover" fetchPriority="high" /></a>
+            <a href="#work" aria-label="See the figures"><Photo job={hero} sizes="(min-width: 1024px) 620px, 92vw" eager alt="Before and after: a broken toilet, then the new toilet installed" className="aspect-[4/3] w-full object-cover" /></a>
             <span className="crop-b" aria-hidden />
           </div>
           <figcaption className="mono absolute inset-x-0 bottom-0 flex justify-between text-[0.82rem] text-muted-foreground"><span>Fig. 1 · Toilet replacement</span><a href="#work" className="link-line text-rust">All figures</a></figcaption>
@@ -119,7 +120,7 @@ function Work({ onOpen }: { onOpen: (id: string) => void }) {
               <motion.li key={j.id} layout initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.25, ease }}>
                 <button onClick={() => onOpen(j.id)} className="group block w-full text-left">
                   <span className="crop block border border-border bg-card p-1.5">
-                    <img src={j.src} alt="" width={j.w} height={j.h} loading="lazy" className={cn("aspect-[4/3] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02]", j.kind === "before-after" ? "object-contain bg-card" : "object-cover")} />
+                    <Photo job={j} sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 92vw" alt="" className={cn("aspect-[4/3] w-full transition-transform duration-500 ease-out group-hover:scale-[1.02]", j.kind === "before-after" ? "object-contain bg-card" : "object-cover")} />
                     <span className="crop-b" aria-hidden />
                   </span>
                   <span className="mono mt-2.5 flex justify-between gap-3 text-[0.8rem] text-rust"><span>Fig. {JOBS.indexOf(j) + 1}</span>{j.kind === "before-after" && <span>Before and after</span>}</span>
@@ -291,7 +292,8 @@ function Contact() {
               <label className="block font-semibold">Your town<select name="town" autoComplete="off" value={c.town} onChange={(e) => c.setTown(e.target.value)} className="mt-2 block h-12 w-full border border-muted-foreground/70 bg-card px-3 text-base font-normal"><option value="">Not sure / other</option>{TOWNS.map((t) => <option key={t}>{t}</option>)}</select></label>
               <label className="block font-semibold sm:col-span-2">Anything else<textarea name="note" autoComplete="off" value={c.note} onChange={(e) => c.setNote(e.target.value)} rows={2} placeholder="The kitchen faucet drips when it’s off…" className="mt-2 block w-full resize-y border border-muted-foreground/70 bg-card px-3 py-3 text-base font-normal placeholder:text-muted-foreground/70" /></label>
             </div>
-            <div className="mt-6 border border-dashed border-border p-4" aria-live="polite"><p className="mono text-[0.8rem] text-rust">Your message</p><p className="mt-1 leading-relaxed">{c.message}</p></div>
+            <p className="sr-only" role="status" aria-live="polite">{c.liveMessage}</p>
+            <div className="mt-6 border border-dashed border-border p-4"><p className="mono text-[0.8rem] text-rust">Your message</p><p className="mt-1 leading-relaxed">{c.message}</p></div>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href={c.smsHref} className="inline-flex h-12 items-center gap-2 border border-primary bg-primary px-5 font-semibold text-primary-foreground transition-colors hover:bg-transparent hover:text-primary"><MessageSquare className="size-[18px]" strokeWidth={1.9} aria-hidden /> Text Adam</a>
               <a href={c.mailHref} className="inline-flex h-12 items-center gap-2 border border-foreground/50 px-5 font-semibold transition-colors hover:bg-foreground hover:text-background"><Mail className="size-[18px]" strokeWidth={1.9} aria-hidden /> Email instead</a>

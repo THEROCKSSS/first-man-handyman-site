@@ -10,3 +10,4 @@ docs/PLAN.md
 src/components/
 src/assets/brand/
 scripts/finalize.mjs
+.cache/

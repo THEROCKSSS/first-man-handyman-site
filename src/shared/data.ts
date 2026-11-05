@@ -1,17 +1,4 @@
 // Every fact below is taken from firstmanhandyman.com (phone, email, towns, services, reviews, FAQ).
-import toilet from "../assets/jobs/fmh-job-toilet-bath-before-after.jpg"
-import vinyl from "../assets/jobs/fmh-job-vinyl-plank-floor-before-after.jpg"
-import kitchenSink from "../assets/jobs/fmh-job-kitchen-sink-before-after.jpg"
-import sweep from "../assets/jobs/fmh-job-shower-door-sweep-before-after.jpg"
-import disposal from "../assets/jobs/fmh-job-garbage-disposal-installed.jpg"
-import bathFaucet from "../assets/jobs/fmh-job-bathroom-faucet-drain-after.jpg"
-import kitchenFaucet from "../assets/jobs/fmh-job-kitchen-sink-faucet-after.jpg"
-import bathSink from "../assets/jobs/fmh-job-bathroom-sink-faucet.jpg"
-import patio from "../assets/jobs/fmh-job-patio-wood-repair.jpg"
-import tv from "../assets/jobs/fmh-job-tv-mount-50in.jpg"
-import sideYard from "../assets/jobs/fmh-job-side-yard-cleanup.jpg"
-import frontYard from "../assets/jobs/fmh-job-front-yard-cleanup.jpg"
-import tree from "../assets/jobs/fmh-job-tree-brush-trimming.jpg"
 
 export const PHONE = "916-910-5423"
 export const PHONE_TEL = "tel:+19169105423"
@@ -30,26 +17,25 @@ export type Job = {
   id: string
   title: string
   note: string
-  src: string
   w: number
   h: number
   kind: "before-after" | "after" | "yard"
 }
 
 export const JOBS: Job[] = [
-  { id: "toilet", title: "Toilet replacement", note: "Old toilet out, new one in", src: toilet, w: 1152, h: 864, kind: "before-after" },
-  { id: "kitchen-sink", title: "Kitchen sink", note: "New stainless sink and pull-down faucet", src: kitchenSink, w: 1600, h: 1106, kind: "before-after" },
-  { id: "patio", title: "Patio wood repair", note: "Rotted patio wood replaced", src: patio, w: 1600, h: 1200, kind: "after" },
-  { id: "vinyl-plank", title: "Vinyl plank floor", note: "Worn bathroom floor replaced with vinyl plank", src: vinyl, w: 1152, h: 864, kind: "before-after" },
-  { id: "disposal", title: "Garbage disposal", note: "Garbage disposal installed", src: disposal, w: 1200, h: 1600, kind: "after" },
-  { id: "shower-sweep", title: "Shower door sweep", note: "Worn sweep replaced to stop drips", src: sweep, w: 1080, h: 1080, kind: "before-after" },
-  { id: "tv-mount", title: "TV mounting", note: "50\" TV mounted", src: tv, w: 1600, h: 1200, kind: "after" },
-  { id: "bath-faucet", title: "Bathroom faucet", note: "New bathroom faucet and drain, leaks fixed", src: bathFaucet, w: 1600, h: 1200, kind: "after" },
-  { id: "kitchen-faucet", title: "Kitchen sink and faucet", note: "Kitchen sink and faucet", src: kitchenFaucet, w: 1080, h: 1351, kind: "after" },
-  { id: "side-yard", title: "Side yard cleanup", note: "Bed cleared and a shrub cut back to the stump", src: sideYard, w: 1463, h: 1600, kind: "yard" },
-  { id: "bath-sink", title: "Bathroom sink faucet", note: "Bathroom sink faucet", src: bathSink, w: 1152, h: 864, kind: "after" },
-  { id: "front-yard", title: "Front yard cleanup", note: "Front yard bed cleanup", src: frontYard, w: 1600, h: 1200, kind: "yard" },
-  { id: "tree-brush", title: "Tree and brush work", note: "Tree and brush work by the garage", src: tree, w: 1217, h: 1600, kind: "yard" },
+  { id: "toilet", title: "Toilet replacement", note: "Old toilet out, new one in", w: 1152, h: 864, kind: "before-after" },
+  { id: "kitchen-sink", title: "Kitchen sink", note: "New stainless sink and pull-down faucet", w: 1600, h: 1106, kind: "before-after" },
+  { id: "patio", title: "Patio wood repair", note: "Rotted patio wood replaced", w: 1600, h: 1200, kind: "after" },
+  { id: "vinyl-plank", title: "Vinyl plank floor", note: "Worn bathroom floor replaced with vinyl plank", w: 1152, h: 864, kind: "before-after" },
+  { id: "disposal", title: "Garbage disposal", note: "Garbage disposal installed", w: 1200, h: 1600, kind: "after" },
+  { id: "shower-sweep", title: "Shower door sweep", note: "Worn sweep replaced to stop drips", w: 1080, h: 1080, kind: "before-after" },
+  { id: "tv-mount", title: "TV mounting", note: "50\" TV mounted", w: 1600, h: 1200, kind: "after" },
+  { id: "bath-faucet", title: "Bathroom faucet", note: "New bathroom faucet and drain, leaks fixed", w: 1600, h: 1200, kind: "after" },
+  { id: "kitchen-faucet", title: "Kitchen sink and faucet", note: "Kitchen sink and faucet", w: 1080, h: 1351, kind: "after" },
+  { id: "side-yard", title: "Side yard cleanup", note: "Bed cleared and a shrub cut back to the stump", w: 1463, h: 1600, kind: "yard" },
+  { id: "bath-sink", title: "Bathroom sink faucet", note: "Bathroom sink faucet", w: 1152, h: 864, kind: "after" },
+  { id: "front-yard", title: "Front yard cleanup", note: "Front yard bed cleanup", w: 1600, h: 1200, kind: "yard" },
+  { id: "tree-brush", title: "Tree and brush work", note: "Tree and brush work by the garage", w: 1217, h: 1600, kind: "yard" },
 ]
 
 export type Service = { name: string; blurb: string; items: string[] }
