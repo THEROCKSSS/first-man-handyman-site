@@ -16,7 +16,7 @@ Follow `skills/change-workflow/SKILL.md`. In short: inspect, ask the owner quest
 | Terms and privacy page | `src/looks/legal/LegalPage.tsx` (entry files: `src/looks/<x>/legal.tsx`, `<x>/legal/index.html`) |
 | Printable cards, flyer, QR codes | `src/print/` |
 | Main page listing the designs | `src/picker/Picker.tsx` and `index.html` |
-| Photos | `src/assets/jobs/` (compressed JPEGs) and `src/assets/thumbs/` (preview images) |
+| Photos | `src/assets/jobs/<id>.jpg` (originals, one per job). The build makes AVIF/WebP/JPEG sizes into `dist/photos/`. Preview images in `src/assets/thumbs/` |
 | Build, check, add-photo | `scripts/` |
 | Recipes | `skills/<name>/SKILL.md` |
 
@@ -33,10 +33,14 @@ Follow `skills/change-workflow/SKILL.md`. In short: inspect, ask the owner quest
 9. **Add photos with `node scripts/add-photo.mjs`** so they are compressed and listed correctly.
 10. Sentence-case headings, calm copy, no emoji, no hype words. Adam writes in first person ("I").
 
+## Speed
+
+11. **`npm run perf` must pass** after any change that adds images, scripts or fonts. Budgets are in `perf-budget.json`; do not raise them without the owner. Details: `docs/PERFORMANCE.md`.
+
 ## Commands
 
 ```bash
-npm run typecheck && npm run build && npm run check
+npm run typecheck && npm run build && npm run check && npm run perf
 ```
 
 ## Known leftovers

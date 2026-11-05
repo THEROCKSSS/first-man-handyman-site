@@ -18,10 +18,10 @@ Follow `skills/change-workflow` first if the request is more than "add this phot
 
 ```bash
 node scripts/add-photo.mjs path/to/photo.jpg --id patio-2 --title "Patio repair" --note "Rotted boards replaced" --kind after
-npm run typecheck && npm run build && npm run check
+npm run typecheck && npm run build && npm run check && npm run perf
 ```
 
-The script shrinks the photo to 1400px wide, saves it in `src/assets/jobs/`, and adds it as the **last** job in `src/shared/data.ts`. To show it first, move its line to the top of `JOBS`.
+The script shrinks the photo to 1400px wide, saves it in `src/assets/jobs/`, and adds it as the **last** job in `src/shared/data.ts`. The build then makes the small AVIF/WebP/JPEG versions by itself. To show it first, move its line to the top of `JOBS`. If `npm run perf` complains about weight, the photo is probably huge; resize it before adding.
 
 ## Check
 
